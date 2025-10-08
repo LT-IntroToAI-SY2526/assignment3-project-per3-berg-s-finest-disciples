@@ -1,5 +1,5 @@
 from typing import List
-
+import requests
 
 def match(pattern: List[str], source: List[str]) -> List[str]:
     """Attempt to match pattern to source
