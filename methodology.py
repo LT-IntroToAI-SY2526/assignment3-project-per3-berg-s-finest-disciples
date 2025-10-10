@@ -241,8 +241,8 @@ def bye_action(dummy: List[str]) -> None:
 # The pattern-action list for the natural language query system A list of tuples of
 # pattern and action It must be declared here, after all of the function definitions
 pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
-    (str.split("what cars were made in _"), title_by_year),
-    (str.split("what cars were made between _ and _"), title_by_year_range),
+    (str.split("What was the most sold car in _"), top_car_by_country),
+    (str.split("what were the top 3 most sold cars in _"), cars_by_country),
     (str.split("what directors were made between _ and _"), director_by_year_range),
     (str.split("what cars were made before _"), title_before_year),
     (str.split("what cars were made after _"), title_after_year),
