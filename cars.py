@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-vehicle_db: List[Tuple[str, int, int, List[str]]] = [
+cars_db: List[Tuple[str, int, int, List[str]]] = [
     ("China", 1, 2023, ["Wuling Hongguang Mini EV", "Tesla Model Y", "BYD Qin Plus"]),
     ("India", 2, 2023, ["Maruti Suzuki Alto", "Maruti Suzuki Swift", "Hyundai Creta"]),
     ("United States", 3, 2023, ["Ford F-Series", "Chevrolet Silverado", "Ram Pickup"]),

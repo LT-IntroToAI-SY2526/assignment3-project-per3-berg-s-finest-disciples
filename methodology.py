@@ -23,11 +23,11 @@ from match import match
 from typing import List, Tuple, Callable, Any
 
 # The projection functions, that give us access to certain parts of a "car" (a tuple)
-def get_title(car: Tuple[str, str, int, List[str]]) -> str:
+def get_country(car: Tuple[str, str, int, List[str]]) -> str:
     return car[0]
 
 
-def get_director(car: Tuple[str, str, int, List[str]]) -> str:
+def get_country_rank(car: Tuple[str, str, int, List[str]]) -> str:
     return car[1]
 
 
@@ -35,7 +35,7 @@ def get_year(car: Tuple[str, str, int, List[str]]) -> int:
     return car[2]
 
 
-def get_actors(car: Tuple[str, str, int, List[str]]) -> List[str]:
+def get_top_cars(car: Tuple[str, str, int, List[str]]) -> List[str]:
     return car[3]
 
 
@@ -44,8 +44,8 @@ def get_actors(car: Tuple[str, str, int, List[str]]) -> List[str]:
 # list of the answer(s) and not just the answer itself.
 
 
-def title_by_year(matches: List[str]) -> List[str]:
-    """Finds all cars made in the passed in year
+def top_car_by_country(matches: List[str]) -> List[str]:
+    """Finds the top car made in the country in 2023.
 
     Args:
         matches - a list of 1 string, just the year. Note that this year is passed as a
@@ -55,17 +55,17 @@ def title_by_year(matches: List[str]) -> List[str]:
         a list of car titles made in the passed in year
     """
 
-    year = int(matches[0])
+    country = int(matches[0])
     result = []
     for car in cars_db:
-        if get_year(car) == year:
-            result.append(get_title(car))
+        if get_country(car) == country:
+            result.append((get_top_cars(car))[0])
     return result
 
 
 
-def title_by_year_range(matches: List[str]) -> List[str]:
-    """Finds all cars made in the passed in year range
+def cars_by_country(matches: List[str]) -> List[str]:
+    """Finds all top cars made in the passed country. 
 
     Args:
         matches - a list of 2 strings, the year beginning the range and the year ending
@@ -77,16 +77,16 @@ def title_by_year_range(matches: List[str]) -> List[str]:
         a list of car titles made during those years, inclusive (meaning if you pass
         in ["1991", "1994"] you will get cars made in 1991, 1992, 1993 & 1994)
     """
-    start_year = int(matches[0])
-    end_year = int(matches[1])
+    
+    country = int(matches[0])
     result = []
     for car in cars_db:
-        if start_year <= get_year(car) <= end_year:
-            result.append(get_title(car))
+        for vehicle in get_top_cars(car) == country:
+            result.append(get_top_cars(car))
     return result
 
 
-def title_before_year(matches: List[str]) -> List[str]:
+def country_by_car(matches: List[str]) -> List[str]:
     """Finds all cars made before the passed in year
 
     Args:
@@ -97,11 +97,11 @@ def title_before_year(matches: List[str]) -> List[str]:
         a list of car titles made before the passed in year, exclusive (meaning if you
         pass in 1992 you won't get any cars made that year, only before)
     """
-    year = int(matches[0])
+    car = int(matches[0])
     result = []
     for car in cars_db:
-        if get_year(car) < year:
-            result.append(get_title(car))
+        if get_country(car) < year:
+            result.append(get_country(car))
     return result
 
 
@@ -120,7 +120,7 @@ def title_after_year(matches: List[str]) -> List[str]:
     result = []
     for car in cars_db:
         if get_year(car) > year:
-            result.append(get_title(car))
+            result.append(get_country(car))
     return result
 
 
@@ -136,8 +136,8 @@ def director_by_title(matches: List[str]) -> List[str]:
     title = matches[0]
     result = []
     for car in cars_db:
-        if get_title(car)==title:
-            result.append(get_director(car))
+        if get_country(car)==title:
+            result.append(get_country_rank(car))
     return result
     
 
@@ -154,8 +154,8 @@ def title_by_director(matches: List[str]) -> List[str]:
     director = matches[0]
     result = []
     for car in cars_db:
-        if get_director(car)==director:
-            result.append(get_title(car))
+        if get_country_rank(car)==director:
+            result.append(get_country(car))
     return result
 
 
@@ -171,8 +171,8 @@ def actors_by_title(matches: List[str]) -> List[str]:
     title = matches[0]
     result = []
     for car in cars_db:
-        if get_title(car)==title:
-            result = get_actors(car)
+        if get_country(car)==title:
+            result = get_top_cars(car)
     return result
 
 
@@ -188,7 +188,7 @@ def year_by_title(matches: List[str]) -> List[int]:
     title = matches[0]
     result = []
     for car in cars_db:
-        if get_title(car)==title:
+        if get_country(car)==title:
             result.append(get_year(car))
     return result
 
@@ -205,8 +205,8 @@ def title_by_actor(matches: List[str]) -> List[str]:
     actor = matches[0]  
     result = []
     for car in cars_db:
-        if actor in get_actors(car):
-            result.append(get_title(car))
+        if actor in get_top_cars(car):
+            result.append(get_country(car))
     return result
 
 def director_by_year_range(matches: List[str]) -> List[str]:
@@ -229,7 +229,7 @@ def director_by_year_range(matches: List[str]) -> List[str]:
     result = []
     for car in cars_db:
         if start_year <= get_year(car) <= end_year:
-            result.append(get_director(car))
+            result.append(get_country_rank(car))
     return result
 
 
@@ -241,8 +241,8 @@ def bye_action(dummy: List[str]) -> None:
 # The pattern-action list for the natural language query system A list of tuples of
 # pattern and action It must be declared here, after all of the function definitions
 pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
-    (str.split("what cars were made in _"), title_by_year),
-    (str.split("what cars were made between _ and _"), title_by_year_range),
+    (str.split("what cars were made in _"), car_by_country),
+    (str.split("what cars were made between _ and _"), car_by_country_range),
     (str.split("what directors were made between _ and _"), director_by_year_range),
     (str.split("what cars were made before _"), title_before_year),
     (str.split("what cars were made after _"), title_after_year),
@@ -305,14 +305,14 @@ def query_loop() -> None:
 # query_loop()
 
 if __name__ == "__main__":
-    assert isinstance(title_by_year(["1974"]), list), "title_by_year not returning a list"
-    assert sorted(title_by_year(["1974"])) == sorted(
+    assert isinstance(car_by_country(["1974"]), list), "car_by_country not returning a list"
+    assert sorted(car_by_country(["1974"])) == sorted(
         ["amarcord", "chinatown"]
-    ), "failed title_by_year test"
-    assert isinstance(title_by_year_range(["1970", "1972"]), list), "title_by_year_range not returning a list"
-    assert sorted(title_by_year_range(["1970", "1972"])) == sorted(
+    ), "failed car_by_country test"
+    assert isinstance(car_by_country_range(["1970", "1972"]), list), "car_by_country_range not returning a list"
+    assert sorted(car_by_country_range(["1970", "1972"])) == sorted(
         ["the godfather", "johnny got his gun"]
-    ), "failed title_by_year_range test"
+    ), "failed car_by_country_range test"
     assert isinstance(title_before_year(["1950"]), list), "title_before_year not returning a list"
     assert sorted(title_before_year(["1950"])) == sorted(
         ["casablanca", "citizen kane", "gone with the wind", "metropolis"]
