@@ -45,13 +45,13 @@ def get_top_cars(car: Tuple[str, str, int, List[str]]) -> List[str]:
 
 
 def top_car_by_country(matches: List[str]) -> List[str]:
-    """Finds the top cars made in the country in 2023.
+    """Finds the top car made in the country in 2023.
 
     Args:
         matches - a list of 1 string, just the country
 
     Returns:
-        a list of cars made in the passed country
+        a list of the top car made in the passed country
     """
 
     country = matches[0]
@@ -64,13 +64,13 @@ def top_car_by_country(matches: List[str]) -> List[str]:
 
 
 def cars_by_country(matches: List[str]) -> List[str]:
-    """Finds the top car made in the country in 2023.
+    """Finds the top cars made in the country in 2023.
 
     Args:
         matches - a list of 1 string, just the country
 
     Returns:
-        a list of the top car made in the passed country
+        a list of cars made in the passed country
     """
     
     country = matches[0]
@@ -153,25 +153,23 @@ def top_car_by_population_rank(matches: List[str]) -> List[str]:
             result.append(get_top_cars(car)[0])
     return result
 
-
-def actors_by_title(matches: List[str]) -> List[str]:
-    """Finds actors who acted in the passed in car title
+def population_rank_by_car(matches: List[str]) -> List[str]:
+    """Finds the country of passed car name
 
     Args:
-        matches - a list of 1 string, just the car title
-
+        matches - a list of 1 string
     Returns:
-        a list of actors who acted in the passed in title
+        a list of the car's country
     """
-    title = matches[0]
+    example_car = matches[0]
     result = []
     for car in cars_db:
-        if get_country(car)==title:
-            result = get_top_cars(car)
+        for vehicle in get_top_cars(car):
+            if vehicle == example_car:
+                result.append(get_country_rank(car))
     return result
 
-
-def year_by_title(matches: List[str]) -> List[int]:
+def top_cars_by_one_car(matches: List[str]) -> List[int]:
     """Finds year of passed in car title
 
     Args:
@@ -180,53 +178,15 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the car was made
     """
-    title = matches[0]
+    example_car = matches[0]
     result = []
     for car in cars_db:
-        if get_country(car)==title:
-            result.append(get_year(car))
+        for vehicle in get_top_cars(car):
+            if vehicle == example_car:
+                for top in get_top_cars(car):
+                    result.append(top)
     return result
-
-
-def title_by_actor(matches: List[str]) -> List[str]:
-    """Finds titles of all cars that the given actor was in
-
-    Args:
-        matches - a list of 1 string, just the actor
-
-    Returns:
-        a list of car titles that the actor acted in
-    """
-    actor = matches[0]  
-    result = []
-    for car in cars_db:
-        if actor in get_top_cars(car):
-            result.append(get_country(car))
-    return result
-
-def director_by_year_range(matches: List[str]) -> List[str]:
-    """
-    My custom action function
-    Finds all directors who made a car in the passed in year range
-
-    Args:
-        matches - a list of 2 strings, the year beginning the range and the year ending
-            the range. For example, to get directors from 1991-1994 matches would look like
-            this - ["1991", "1994"] Note that these years are passed as strings and
-            should be converted to ints.
-
-    Returns:
-        a list of directors who made cars during those years, inclusive (meaning if you pass
-        in ["1991", "1994"] you will get directors in 1991, 1992, 1993 & 1994)
-    """
-    start_year = int(matches[0])
-    end_year = int(matches[1])
-    result = []
-    for car in cars_db:
-        if start_year <= get_year(car) <= end_year:
-            result.append(get_country_rank(car))
-    return result
-
+    
 
 # dummy argument is ignored and doesn't matter
 def bye_action(dummy: List[str]) -> None:
