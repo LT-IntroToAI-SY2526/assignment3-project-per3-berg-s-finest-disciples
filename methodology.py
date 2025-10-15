@@ -5,9 +5,9 @@
 #       action  - return list of strings
 
 # THINGS TO ASK THE car CHAT BOT:
-# what cars were made in _ (must be date, because we don't have location)
-# what cars were made between _ and _
-# what cars were made before _
+# what cars were made in _ (country)
+# what best car was made in _ (country)
+# what country was _ made in? (car)
 # what cars were made after _
 # who directed %
 # who was the director of %
@@ -45,17 +45,16 @@ def get_top_cars(car: Tuple[str, str, int, List[str]]) -> List[str]:
 
 
 def top_car_by_country(matches: List[str]) -> List[str]:
-    """Finds the top car made in the country in 2023.
+    """Finds the top cars made in the country in 2023.
 
     Args:
-        matches - a list of 1 string, just the year. Note that this year is passed as a
-            string and should be converted to an int
+        matches - a list of 1 string, just the country
 
     Returns:
-        a list of car titles made in the passed in year
+        a list of cars made in the passed country
     """
 
-    country = int(matches[0])
+    country = matches[0]
     result = []
     for car in cars_db:
         if get_country(car) == country:
@@ -65,66 +64,62 @@ def top_car_by_country(matches: List[str]) -> List[str]:
 
 
 def cars_by_country(matches: List[str]) -> List[str]:
-    """Finds all top cars made in the passed country. 
+    """Finds the top car made in the country in 2023.
 
     Args:
-        matches - a list of 2 strings, the year beginning the range and the year ending
-            the range. For example, to get cars from 1991-1994 matches would look like
-            this - ["1991", "1994"] Note that these years are passed as strings and
-            should be converted to ints.
+        matches - a list of 1 string, just the country
 
     Returns:
-        a list of car titles made during those years, inclusive (meaning if you pass
-        in ["1991", "1994"] you will get cars made in 1991, 1992, 1993 & 1994)
+        a list of the top car made in the passed country
     """
     
-    country = int(matches[0])
+    country = matches[0]
     result = []
     for car in cars_db:
-        for vehicle in get_top_cars(car) == country:
-            result.append(get_top_cars(car))
+        if get_country(car) == country:
+            for top in get_top_cars(car):
+                result.append(top)
     return result
 
 
 def country_by_car(matches: List[str]) -> List[str]:
-    """Finds all cars made before the passed in year
+    """Finds the country of passed car name
 
     Args:
-        matches - a list of 1 string, just the year. Note that this year is passed as a
-            string and should be converted to an int
-
+        matches - a list of 1 string
     Returns:
-        a list of car titles made before the passed in year, exclusive (meaning if you
-        pass in 1992 you won't get any cars made that year, only before)
+        a list of the car's country
     """
-    car = int(matches[0])
+    example_car = matches[0]
     result = []
     for car in cars_db:
-        if get_country(car) < year:
-            result.append(get_country(car))
+        for vehicle in get_top_cars(car):
+            if vehicle == example_car:
+                result.append(get_country(car))
     return result
 
 
-def title_after_year(matches: List[str]) -> List[str]:
-    """Finds all cars made after the passed in year
+def country_by_population_rank(matches: List[str]) -> List[str]:
+    """Finds country based on population rank
 
     Args:
-        matches - a list of 1 string, just the year. Note that this year is passed as a
-            string and should be converted to an int
+        matches - a list of 1 string, just the rank
 
     Returns:
         a list of car titles made after the passed in year, exclusive (meaning if you
         pass in 1992 you won't get any cars made that year, only after)
     """
-    year = int(matches[0])
+
+    rank = matches[0]
     result = []
     for car in cars_db:
-        if get_year(car) > year:
-            result.append(get_country(car))
+        if get_country_rank(car) == rank:
+            for country in get_country(car):
+                result.append(country)
     return result
 
 
-def director_by_title(matches: List[str]) -> List[str]:
+def cars_by_population_rank(matches: List[str]) -> List[str]:
     """Finds director of car based on title
 
     Args:
@@ -133,16 +128,16 @@ def director_by_title(matches: List[str]) -> List[str]:
     Returns:
         a list of 1 string, the director of the car
     """
-    title = matches[0]
+    rank = matches[0]
     result = []
     for car in cars_db:
-        if get_country(car)==title:
-            result.append(get_country_rank(car))
+        if get_country_rank(car) == rank:
+            for top in get_top_cars(car):
+                result.append(top)
     return result
-    
 
 
-def title_by_director(matches: List[str]) -> List[str]:
+def top_car_by_population_rank(matches: List[str]) -> List[str]:
     """Finds cars directed by the passed in director
 
     Args:
@@ -151,11 +146,11 @@ def title_by_director(matches: List[str]) -> List[str]:
     Returns:
         a list of cars titles directed by the passed in director
     """
-    director = matches[0]
+    rank = matches[0]
     result = []
     for car in cars_db:
-        if get_country_rank(car)==director:
-            result.append(get_country(car))
+        if get_country_rank(car) == rank:
+            result.append(get_top_cars(car)[0])
     return result
 
 
