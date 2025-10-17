@@ -83,16 +83,12 @@ def cars_by_country(matches: List[str]) -> List[str]:
 
 
 def country_by_car(matches: List[str]) -> List[str]:
-    """Finds the countries of passed car name
+    """Finds the country of passed car name
 
     Args:
         matches - a list of x strings
     Returns:
-<<<<<<< HEAD
         a list of the car's country(s)
-=======
-        a list of the car's countries
->>>>>>> 52387ddbf9281829d2a8c29f256b8f567096b461
     """
     example_car = matches[0]
     result = []
@@ -110,7 +106,8 @@ def country_by_population_rank(matches: List[str]) -> List[str]:
         matches - a list of 1 string, just the rank
 
     Returns:
-        a list of car titles made in the country of the passed in rank
+        a list of car titles made after the passed in year, exclusive (meaning if you
+        pass in 1992 you won't get any cars made that year, only after)
     """
 
     rank = matches[0]
@@ -123,13 +120,13 @@ def country_by_population_rank(matches: List[str]) -> List[str]:
 
 
 def cars_by_population_rank(matches: List[str]) -> List[str]:
-    """Finds top cars based on rank
+    """Finds director of car based on title
 
     Args:
-        matches - a list of 1 string, just the rank
+        matches - a list of 1 string, just the title
 
     Returns:
-        a list of top cars
+        a list of 1 string, the director of the car
     """
     rank = matches[0]
     result = []
@@ -141,13 +138,13 @@ def cars_by_population_rank(matches: List[str]) -> List[str]:
 
 
 def top_car_by_population_rank(matches: List[str]) -> List[str]:
-    """Finds number 1 car from country by passed rank
+    """Finds cars directed by the passed in director
 
     Args:
-        matches - a list of 1 string, rank
+        matches - a list of 1 string, just the director
 
     Returns:
-        a list with the top car
+        a list of cars titles directed by the passed in director
     """
     rank = matches[0]
     result = []
@@ -157,12 +154,12 @@ def top_car_by_population_rank(matches: List[str]) -> List[str]:
     return result
 
 def population_rank_by_car(matches: List[str]) -> List[str]:
-    """Finds the country ranks of passed car name
+    """Finds the country of passed car name
 
     Args:
         matches - a list of 1 string
     Returns:
-        a list of the car's country ranks
+        a list of the car's country
     """
     example_car = matches[0]
     result = []
@@ -172,19 +169,14 @@ def population_rank_by_car(matches: List[str]) -> List[str]:
                 result.append(get_country_rank(car))
     return result
 
-<<<<<<< HEAD
 def cars_by_top_car(matches: List[str]) -> List[int]:
     """Finds year of passed in car title
-=======
-def top_cars_by_one_car(matches: List[str]) -> List[int]:
-    """Finds the cars based off of passed top car
->>>>>>> 52387ddbf9281829d2a8c29f256b8f567096b461
 
     Args:
-        matches - a list of 1 string, just the car 
+        matches - a list of 1 string, just the car title
 
     Returns:
-        a list of cars
+        a list of one item (an int), the year that the car was made
     """
     example_car = matches[0]
     result = []
@@ -204,12 +196,6 @@ def bye_action(dummy: List[str]) -> None:
 # The pattern-action list for the natural language query system A list of tuples of
 # pattern and action It must be declared here, after all of the function definitions
 pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
-<<<<<<< HEAD
-
-=======
-    (str.split("What was the most sold car in _"), top_car_by_country),
-    (str.split("what were the top 3 most sold cars in _"), cars_by_country),
->>>>>>> 87e937151287bb2c2a3f21dec4ea540747c0613d
     (str.split("What countries had _ as one of their most sold cars."), country_by_car),
     (str.split("What country is rank _ in population."), country_by_population_rank),
     (str.split("what were the top 3 most sold cars in the country with population rank _"), cars_by_population_rank),
