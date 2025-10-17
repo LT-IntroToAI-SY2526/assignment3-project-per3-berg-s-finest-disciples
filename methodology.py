@@ -86,9 +86,9 @@ def country_by_car(matches: List[str]) -> List[str]:
     """Finds the country of passed car name
 
     Args:
-        matches - a list of 1 string
+        matches - a list of x strings
     Returns:
-        a list of the car's country
+        a list of the car's country(s)
     """
     example_car = matches[0]
     result = []
@@ -169,7 +169,7 @@ def population_rank_by_car(matches: List[str]) -> List[str]:
                 result.append(get_country_rank(car))
     return result
 
-def top_cars_by_one_car(matches: List[str]) -> List[int]:
+def cars_by_top_car(matches: List[str]) -> List[int]:
     """Finds year of passed in car title
 
     Args:
@@ -197,23 +197,17 @@ def bye_action(dummy: List[str]) -> None:
 # pattern and action It must be declared here, after all of the function definitions
 pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
 <<<<<<< HEAD
-    (str.split("what cars were made in _"), car_by_country),
-    (str.split("what cars were made between _ and _"), car_by_country_range),
+
 =======
     (str.split("What was the most sold car in _"), top_car_by_country),
     (str.split("what were the top 3 most sold cars in _"), cars_by_country),
 >>>>>>> 87e937151287bb2c2a3f21dec4ea540747c0613d
-    (str.split("what directors were made between _ and _"), director_by_year_range),
-    (str.split("what cars were made before _"), title_before_year),
-    (str.split("what cars were made after _"), title_after_year),
-    # note there are two valid patterns here two different ways to ask for the director
-    # of a car
-    (str.split("who directed %"), director_by_title),
-    (str.split("who was the director of %"), director_by_title),
-    (str.split("what cars were directed by %"), title_by_director),
-    (str.split("who acted in %"), actors_by_title),
-    (str.split("when was % made"), year_by_title),
-    (str.split("in what cars did % appear"), title_by_actor),
+    (str.split("What countries had _ as one of their most sold cars."), country_by_car),
+    (str.split("What country is rank _ in population."), country_by_population_rank),
+    (str.split("what were the top 3 most sold cars in the country with population rank _"), cars_by_population_rank),
+    (str.split("What was the most sold car in the country with population rank _"), top_car_by_population_rank),
+    (str.split("What population ranked nations had the _ as one of the most sold cars."), population_rank_by_car),
+    (str.split("What were second and third most sold cars in the nation with the top car _"), cars_by_top_car),
     (["bye"], bye_action),
 ]
 
