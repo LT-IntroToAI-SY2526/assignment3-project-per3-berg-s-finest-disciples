@@ -83,12 +83,12 @@ def cars_by_country(matches: List[str]) -> List[str]:
 
 
 def country_by_car(matches: List[str]) -> List[str]:
-    """Finds the country of passed car name
+    """Finds the countries of passed car name
 
     Args:
         matches - a list of 1 string
     Returns:
-        a list of the car's country
+        a list of the car's countries
     """
     example_car = matches[0]
     result = []
@@ -106,8 +106,7 @@ def country_by_population_rank(matches: List[str]) -> List[str]:
         matches - a list of 1 string, just the rank
 
     Returns:
-        a list of car titles made after the passed in year, exclusive (meaning if you
-        pass in 1992 you won't get any cars made that year, only after)
+        a list of car titles made in the country of the passed in rank
     """
 
     rank = matches[0]
@@ -120,13 +119,13 @@ def country_by_population_rank(matches: List[str]) -> List[str]:
 
 
 def cars_by_population_rank(matches: List[str]) -> List[str]:
-    """Finds director of car based on title
+    """Finds top cars based on rank
 
     Args:
-        matches - a list of 1 string, just the title
+        matches - a list of 1 string, just the rank
 
     Returns:
-        a list of 1 string, the director of the car
+        a list of top cars
     """
     rank = matches[0]
     result = []
@@ -138,13 +137,13 @@ def cars_by_population_rank(matches: List[str]) -> List[str]:
 
 
 def top_car_by_population_rank(matches: List[str]) -> List[str]:
-    """Finds cars directed by the passed in director
+    """Finds number 1 car from country by passed rank
 
     Args:
-        matches - a list of 1 string, just the director
+        matches - a list of 1 string, rank
 
     Returns:
-        a list of cars titles directed by the passed in director
+        a list with the top car
     """
     rank = matches[0]
     result = []
@@ -154,12 +153,12 @@ def top_car_by_population_rank(matches: List[str]) -> List[str]:
     return result
 
 def population_rank_by_car(matches: List[str]) -> List[str]:
-    """Finds the country of passed car name
+    """Finds the country ranks of passed car name
 
     Args:
         matches - a list of 1 string
     Returns:
-        a list of the car's country
+        a list of the car's country ranks
     """
     example_car = matches[0]
     result = []
@@ -170,13 +169,13 @@ def population_rank_by_car(matches: List[str]) -> List[str]:
     return result
 
 def top_cars_by_one_car(matches: List[str]) -> List[int]:
-    """Finds year of passed in car title
+    """Finds the cars based off of passed top car
 
     Args:
-        matches - a list of 1 string, just the car title
+        matches - a list of 1 string, just the car 
 
     Returns:
-        a list of one item (an int), the year that the car was made
+        a list of cars
     """
     example_car = matches[0]
     result = []
