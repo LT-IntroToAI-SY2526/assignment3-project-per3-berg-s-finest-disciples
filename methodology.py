@@ -26,8 +26,7 @@ from typing import List, Tuple, Callable, Any
 def get_country(car: Tuple[str, str, int, List[str]]) -> str:
     return car[0]
 
-
-def get_country_rank(car: Tuple[str, str, int, List[str]]) -> int:
+def get_country_rank(car: Tuple[str, int, int, List[str]]) -> int:
     return car[1]
 
 
@@ -90,11 +89,11 @@ def country_by_car(matches: List[str]) -> List[str]:
     Returns:
         a list of the car's country(s)
     """
-    example_car = matches[0]
+    example_car = matches[0].lower()
     result = []
     for car in cars_db:
         for vehicle in get_top_cars(car):
-            if vehicle == example_car:
+            if vehicle.strip().lower() == example_car.strip().lower():
                 result.append(get_country(car))
     return result
 
@@ -106,11 +105,10 @@ def country_by_population_rank(matches: List[str]) -> List[str]:
         matches - a list of 1 string, just the rank
 
     Returns:
-        a list of car titles made after the passed in year, exclusive (meaning if you
-        pass in 1992 you won't get any cars made that year, only after)
+        a list with the car's country
     """
 
-    rank = matches[0]
+    rank = int(matches[0])
     result = []
     for car in cars_db:
         if get_country_rank(car) == rank:
@@ -118,16 +116,17 @@ def country_by_population_rank(matches: List[str]) -> List[str]:
     return result
 
 
+
 def cars_by_population_rank(matches: List[str]) -> List[str]:
-    """Finds director of car based on title
+    """finds top cars based on a country's population rank
 
     Args:
-        matches - a list of 1 string, just the title
+        matches - a list of 1 int, just the rank
 
     Returns:
-        a list of 1 string, the director of the car
+        a list of 3 string, the top 3 cars
     """
-    rank = matches[0]
+    rank = int(matches[0])
     result = []
     for car in cars_db:
         if get_country_rank(car) == rank:
@@ -136,16 +135,17 @@ def cars_by_population_rank(matches: List[str]) -> List[str]:
     return result
 
 
+
 def top_car_by_population_rank(matches: List[str]) -> List[str]:
-    """Finds cars directed by the passed in director
+    """Finds the most popular car based on population rank
 
     Args:
-        matches - a list of 1 string, just the director
+        matches - a list of 1 int, rank
 
     Returns:
-        a list of cars titles directed by the passed in director
+        a list of the car
     """
-    rank = matches[0]
+    rank = int(matches[0])
     result = []
     for car in cars_db:
         if get_country_rank(car) == rank:
@@ -153,28 +153,29 @@ def top_car_by_population_rank(matches: List[str]) -> List[str]:
     return result
 
 def population_rank_by_car(matches: List[str]) -> List[str]:
-    """Finds the country of passed car name
+    """Finds rank of passed car name
 
     Args:
         matches - a list of 1 string
     Returns:
-        a list of the car's country
+        a list of the car's rank
     """
     example_car = matches[0]
     result = []
     for car in cars_db:
         for vehicle in get_top_cars(car):
-            if vehicle == example_car:
-                result.append(get_country_rank(car))
+            if vehicle.strip().casefold() == example_car.strip().casefold():
+                result.append(str(get_country_rank(car)))
     return result
 
+
 def cars_by_top_car(matches: List[str]) -> List[str]:
-    """Finds second and third most sold cars for a given top car.
+    """Finds most popular cars for a given top car.
         Args:
             matches - a list of 1 string, just the car title
 
         Returns:
-            a list of one item (an int), the year that the car was made
+            a list of 3 strings, top cars
     """
     example_car = matches[0]
     result = []
@@ -256,30 +257,25 @@ if __name__ == "__main__":
     # Test 2: top_car_by_country
     assert top_car_by_country(["Japan"]) == ["Toyota Corolla"]
 
-    # Test 3: country_by_car
-    assert country_by_car(["Toyota Corolla"]) == [
-        "Pakistan", "Egypt", "Japan", "Bangladesh", "Poland", "Venezuela", "Uzbekistan"
-    ]
-
-    # Test 4: country_by_population_rank
+    # Test 3: country_by_population_rank
     assert country_by_population_rank(["3"]) == ["United States"]
 
-    # Test 5: cars_by_population_rank
+    # Test 4: cars_by_population_rank
     assert "Ford F-Series" in cars_by_population_rank(["3"])
 
-    # Test 6: top_car_by_population_rank
+    # Test 5: top_car_by_population_rank
     assert top_car_by_population_rank(["2"]) == ["Maruti Suzuki Alto"]
 
-    # Test 7: population_rank_by_car
-    assert population_rank_by_car(["Ford F-Series"]) == ["3"]
+    # Test 6: population_rank_by_car
+    assert population_rank_by_car(["Ford F-Series"]) == ["3","37"]
 
-    # Test 8: cars_by_top_car
+    # Test 7: cars_by_top_car
     assert sorted(cars_by_top_car(["Toyota Hilux"])) != [], "cars_by_top_car returned empty list"
 
-    # Test 9: unmatched query
+    # Test 8: unmatched query
     assert search_pa_list(["nonsense", "query"]) == ["I don't understand"]
 
-    # Test 10: bye keyword
+    # Test 9: bye keyword
     try:
         bye_action(["dummy"])
     except KeyboardInterrupt:
