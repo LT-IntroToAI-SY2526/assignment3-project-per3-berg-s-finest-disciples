@@ -27,7 +27,7 @@ def get_country(car: Tuple[str, str, int, List[str]]) -> str:
     return car[0]
 
 
-def get_country_rank(car: Tuple[str, str, int, List[str]]) -> str:
+def get_country_rank(car: Tuple[str, str, int, List[str]]) -> int:
     return car[1]
 
 
