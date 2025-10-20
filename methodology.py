@@ -282,5 +282,6 @@ if __name__ == "__main__":
         pass
     else:
         raise AssertionError("bye_action did not raise KeyboardInterrupt")
-    query_loop()
     print("✅ All car database tests passed!")
+
+    query_loop()
